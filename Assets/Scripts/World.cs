@@ -7,6 +7,7 @@ namespace WorldGenerator {
 
         public GameObject chunkPrefab;
         private Dictionary<WorldPosition, Chunk> chunks = new Dictionary<WorldPosition, Chunk>();
+        public int seed = 0;
 
         public bool generateChunk = false;
         public int newChunkX;
@@ -15,9 +16,9 @@ namespace WorldGenerator {
 
         // Start is called before the first frame update
         void Start() {
-            for (int x = -2; x < 2; x++) {
-                for (int y = -1; y < 1; y++) {
-                    for (int z = -1; z < 1; z++) {
+            for (int x = -4; x < 4; x++) {
+                for (int y = -1; y < 3; y++) {
+                    for (int z = -4; z < 4; z++) {
                         CreateChunk(x * Chunk.SIZE, y * Chunk.SIZE, z * Chunk.SIZE);
                     }
                 }
@@ -55,17 +56,8 @@ namespace WorldGenerator {
             // Add it to the chunks dictionary with the position as the key
             chunks.Add(position, chunk);
 
-            for (int xi = 0; xi < Chunk.SIZE; xi++) {
-                for (int yi = 0; yi < Chunk.SIZE; yi++) {
-                    for (int zi = 0; zi < Chunk.SIZE; zi++) {
-                        if (yi < Chunk.SIZE / 2) {
-                            SetBlock(x + xi, y + yi, z + zi, new BlockGrass());
-                        } else {
-                            SetBlock(x + xi, y + yi, z + zi, new BlockAir());
-                        }
-                    }
-                }
-            }
+            TerrainGenerator terrainGenerator = new TerrainGenerator { Seed = seed };
+            terrainGenerator.GenerateChunk(ref chunk);
 
             chunk.SetBlocksUnmodified();
             Serialization.LoadChunk(chunk);

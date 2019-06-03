@@ -14,9 +14,10 @@ namespace WorldGenerator {
         // Start is called before the first frame update
         void Start() {
             AssignBlockType(new BlockGrass());
+            Debug.Log(transform.eulerAngles);
             rotation = new Vector2(
                 transform.eulerAngles.y,
-                transform.eulerAngles.x
+                -transform.eulerAngles.x
             );
         }
 
