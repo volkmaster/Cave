@@ -6,37 +6,17 @@ namespace WorldGenerator {
         public string Name { get; } = "World";
 
         public GameObject chunkPrefab;
-        private Dictionary<WorldPosition, Chunk> chunks = new Dictionary<WorldPosition, Chunk>();
+        public Dictionary<WorldPosition, Chunk> Chunks { get; } = new Dictionary<WorldPosition, Chunk>();
         public int seed = 0;
-
-        public bool generateChunk = false;
-        public int newChunkX;
-        public int newChunkY;
-        public int newChunkZ;
 
         // Start is called before the first frame update
         void Start() {
-            for (int x = -4; x < 4; x++) {
-                for (int y = -1; y < 3; y++) {
-                    for (int z = -4; z < 4; z++) {
-                        CreateChunk(x * Chunk.SIZE, y * Chunk.SIZE, z * Chunk.SIZE);
-                    }
-                }
-            }
+
         }
 
         // Update is called once per frame
         void Update() {
-            if (generateChunk) {
-                generateChunk = false;
 
-                WorldPosition position = new WorldPosition(newChunkX, newChunkY, newChunkZ);
-                if (chunks.TryGetValue(position, out Chunk chunk)) {
-                    DestroyChunk(position.X, position.Y, position.Z);
-                } else {
-                    CreateChunk(position.X, position.Y, position.Z);
-                }
-            }
         }
 
         public void CreateChunk(int x, int y, int z) {
@@ -54,7 +34,7 @@ namespace WorldGenerator {
             chunk.Position = position;
 
             // Add it to the chunks dictionary with the position as the key
-            chunks.Add(position, chunk);
+            Chunks.Add(position, chunk);
 
             TerrainGenerator terrainGenerator = new TerrainGenerator { Seed = seed };
             terrainGenerator.GenerateChunk(ref chunk);
@@ -69,16 +49,16 @@ namespace WorldGenerator {
                 Mathf.FloorToInt(y / (float)Chunk.SIZE) * Chunk.SIZE,
                 Mathf.FloorToInt(z / (float)Chunk.SIZE) * Chunk.SIZE
             );
-            chunks.TryGetValue(position, out Chunk chunk);
+            Chunks.TryGetValue(position, out Chunk chunk);
             return chunk;
         }
 
         public void DestroyChunk(int x, int y, int z) {
             WorldPosition position = new WorldPosition(x, y, z);
-            if (chunks.TryGetValue(position, out Chunk chunk)) {
+            if (Chunks.TryGetValue(position, out Chunk chunk)) {
                 Serialization.SaveChunk(chunk);
                 Destroy(chunk.gameObject);
-                chunks.Remove(position);
+                Chunks.Remove(position);
             }
         }
 

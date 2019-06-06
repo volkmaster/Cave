@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace WorldGenerator {
     public class Modify : MonoBehaviour {
         private Block currentBlock;
-        public Text blockText;
+        public Text blockTypeText;
 
         private Vector2 rotation;
         private const int RAY_LENGTH = 30;
@@ -14,7 +14,6 @@ namespace WorldGenerator {
         // Start is called before the first frame update
         void Start() {
             AssignBlockType(new BlockGrass());
-            Debug.Log(transform.eulerAngles);
             rotation = new Vector2(
                 transform.eulerAngles.y,
                 -transform.eulerAngles.x
@@ -67,7 +66,7 @@ namespace WorldGenerator {
 
         private void AssignBlockType(Block block) {
             currentBlock = block;
-            blockText.text = block.Description;
+            blockTypeText.text = block.Description;
         }
     }
 }

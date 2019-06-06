@@ -9,7 +9,8 @@ namespace WorldGenerator {
         private MeshCollider meshCollider;
 
         public Block[,,] Blocks { get; set; } = new Block[SIZE, SIZE, SIZE];
-        public bool DoUpdate { get; set; } = true;
+        public bool DoUpdate { get; set; } = false;
+        public bool Rendered { get; set; } = false;
         public World World { get; set; }
         public WorldPosition Position { get; set; }
         public const int SIZE = 16;
@@ -52,6 +53,7 @@ namespace WorldGenerator {
 
         // Updates the chunk based on its contents
         private void UpdateChunk() {
+            Rendered = true;
             MeshData meshData = new MeshData();
             for (int x = 0; x < SIZE; x++) {
                 for (int y = 0; y < SIZE; y++) {
