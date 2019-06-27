@@ -7,7 +7,7 @@ namespace WorldGenerator {
         public Text blockTypeText;
 
         private Vector2 rotation;
-        private const int RAY_LENGTH = 30;
+        private const int RAY_LENGTH = 5;
         private const int MOUSE_SENSITIVITY = 3;
         private const int MOVEMENT_SENSITIVITY = 1;
 
@@ -52,16 +52,16 @@ namespace WorldGenerator {
             }
 
             // Rotate scene on mouse movement
-            rotation = new Vector2(
-                rotation.x + Input.GetAxis("Mouse X") * MOUSE_SENSITIVITY,
-                rotation.y + Input.GetAxis("Mouse Y") * MOUSE_SENSITIVITY
-            );
-            transform.localRotation = Quaternion.AngleAxis(rotation.x, Vector3.up);
-            transform.localRotation *= Quaternion.AngleAxis(rotation.y, Vector3.left);
+            //rotation = new Vector2(
+            //    rotation.x + Input.GetAxis("Mouse X") * MOUSE_SENSITIVITY,
+            //    rotation.y + Input.GetAxis("Mouse Y") * MOUSE_SENSITIVITY
+            //);
+            //transform.localRotation = Quaternion.AngleAxis(rotation.x, Vector3.up);
+            //transform.localRotation *= Quaternion.AngleAxis(rotation.y, Vector3.left);
 
             // Move scene on key press
-            transform.position += transform.forward * MOVEMENT_SENSITIVITY * Input.GetAxis("Vertical");
-            transform.position += transform.right * MOVEMENT_SENSITIVITY * Input.GetAxis("Horizontal");
+            //transform.position += transform.forward * MOVEMENT_SENSITIVITY * Input.GetAxis("Vertical");
+            //transform.position += transform.right * MOVEMENT_SENSITIVITY * Input.GetAxis("Horizontal");
         }
 
         private void AssignBlockType(Block block) {

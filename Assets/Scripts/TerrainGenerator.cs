@@ -43,9 +43,16 @@ namespace WorldGenerator {
             int dirtHeight = stoneHeight + Mathf.FloorToInt(dirtBaseHeight);
             dirtHeight += GetNoise(x, 100, z, dirtNoise, Mathf.FloorToInt(dirtNoiseHeight));
 
+            var total = Mathf.Abs(stoneBaseHeight) + Mathf.Abs(stoneHeight);
+            var part = total / 3;
+
             // we cycle through every chunk in the column adding the block that matches
             for (int y = chunk.Position.Y; y < chunk.Position.Y + Chunk.SIZE; y++) {
-                if (y <= stoneHeight) {
+                if (y <= stoneBaseHeight + part) {
+                    chunk.SetBlock(x - chunk.Position.X, y - chunk.Position.Y, z - chunk.Position.Z, new BlockStone());
+                } else if (y <= stoneBaseHeight + 2 * part) {
+                    chunk.SetBlock(x - chunk.Position.X, y - chunk.Position.Y, z - chunk.Position.Z, new BlockAir());
+                } else if (y <= stoneHeight) {
                     chunk.SetBlock(x - chunk.Position.X, y - chunk.Position.Y, z - chunk.Position.Z, new BlockStone());
                 } else if (y <= dirtHeight) {
                     chunk.SetBlock(x - chunk.Position.X, y - chunk.Position.Y, z - chunk.Position.Z, new BlockGrass());
